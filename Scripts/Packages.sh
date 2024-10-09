@@ -9,6 +9,9 @@ UPDATE_PACKAGE() {
 	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
 
 	rm -rf $(find ../feeds/luci/ ../feeds/packages/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune)
+        rm -rf feeds/luci/themes/luci-theme-argon
+        rm -rf feeds/luci/themes/luci-theme-netgear
+        rm -rf feeds/luci/applications/luci-app-netdata
 
 	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 
@@ -22,17 +25,36 @@ UPDATE_PACKAGE() {
 
 #UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
 UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
-UPDATE_PACKAGE "kucat" "sirpdboy/luci-theme-kucat" "js"
+UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "master"
+UPDATE_PACKAGE "kucat" "sirpdboy/luci-theme-kucat" "js"  #酷猫主题
+UPDATE_PACKAGE "advancedplus" "VIKINGYFY/luci-app-advancedplus" "main"  #酷猫主题设置
+UPDATE_PACKAGE "alpha" "derisamedia/luci-theme-alpha" "master"
+UPDATE_PACKAGE "alpha-config" "animegasan/luci-app-alpha-config" "master"
 
-UPDATE_PACKAGE "nekoclash" "Thaolga/luci-app-nekoclash" "main"
-UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev" "pkg"
-UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "main" "pkg"
-UPDATE_PACKAGE "ssr-plus" "fw876/helloworld" "master"
+#添加应用
+#UPDATE_PACKAGE "luci-app-adguardhome" "sirpdboy/sirpdboy-package" "main" "pkg"   #adguard home
+#UPDATE_PACKAGE "luci-app-ikoolproxy" "ilxp/luci-app-ikoolproxy" "main"   #iKoolProxy 滤广告
+#UPDATE_PACKAGE "luci-app-adbyby-plus" "coolsnowwolf/luci" "master"  #网站域名黑白名单配置 去广告
+#UPDATE_PACKAGE "luci-app-alist" "sbwml/luci-app-alist" "master"   #alist
+#UPDATE_PACKAGE "luci-app-eqosplus" "sirpdboy/sirpdboy-package" "main" "pkg"    #EQS网速控制
+#UPDATE_PACKAGE "luci-app-advanced" "sirpdboy/sirpdboy-package" "main" "pkg"  #系统高级设置【自带文件管理功能】
+UPDATE_PACKAGE "luci-app-poweroffdevice" "sirpdboy/sirpdboy-package" "main" "pkg"  #关机功能插件
+UPDATE_PACKAGE "luci-app-netdata" "sirpdboy/sirpdboy-package" "main" "pkg"   #实时监控
+UPDATE_PACKAGE "luci-app-fileassistant" "Lienol/openwrt-package" "main" "pkg"   #文件助手
+UPDATE_PACKAGE "luci-app-autotimeset" "sirpdboy/luci-app-autotimeset" "master"  #定时关机插件
+UPDATE_PACKAGE "gecoosac" "lwb1978/openwrt-gecoosac" "main"    #集客 AC OpenWRT 插件 2.1 版
+UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"   #tailscale
+UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/luci-app-wolplus" "main"   #网络唤醒
 
-UPDATE_PACKAGE "luci-app-advancedplus" "VIKINGYFY/luci-app-advancedplus" "main"
-UPDATE_PACKAGE "luci-app-gecoosac" "lwb1978/openwrt-gecoosac" "main"
-UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
-UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/luci-app-wolplus" "main"
+#科学插件
+UPDATE_PACKAGE "luci-app-ssr-plus" "fw876/helloworld" "master"
+UPDATE_PACKAGE "passwall-packages" "xiaorouji/openwrt-passwall-packages" "main"
+UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "main" "pkg"
+#UPDATE_PACKAGE "luci-app-passwall" "xiaorouji/openwrt-passwall" "luci-smartdns-dev" "pkg"
+UPDATE_PACKAGE "luci-app-passwall2" "xiaorouji/openwrt-passwall2" "main"
+UPDATE_PACKAGE "luci-app-openclash" "vernesong/OpenClash" "dev" "pkg"
+UPDATE_PACKAGE "luci-app-nekoclash" "Thaolga/luci-app-nekoclash" "main"
+UPDATE_PACKAGE "luci-app-mihomo" "morytyann/OpenWrt-mihomo" "main" "pkg"
 
 if [[ $WRT_BRANCH == *"23.05"* ]]; then
 	UPDATE_PACKAGE "homeproxy" "VIKINGYFY/homeproxy" "main"
