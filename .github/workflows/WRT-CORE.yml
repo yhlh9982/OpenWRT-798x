@@ -90,7 +90,7 @@ jobs:
 
           sudo mkdir -p /mnt/build_wrt
           sudo chown $USER:$USER /mnt/build_wrt
-          sudo ln -s /mnt/build_wrt $GITHUB_WORKSPACE/wrt
+          sudo ln -s /mnt/build_wrt $GITHUB_WORKSPACE
 
       - name: Initialization Values
         run: |
@@ -220,7 +220,7 @@ jobs:
 
           if [[ $WRT_TEST != 'true' ]]; then
             KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)
-            WRT_TARGET=$(grep -m 1 -oP 'DEVICE_\K[a-z0-9_]+(?=_DEVICE)' ./.config | tr '[:lower:]' '[:upper:]')
+            WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./.config | tr '[:lower:]' '[:upper:]')
 
             find ./bin/targets/ -iregex ".*\(buildinfo\|json\|manifest\|sha256sums\|packages\)$" -exec rm -rf {} +
 
